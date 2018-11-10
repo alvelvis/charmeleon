@@ -9,28 +9,19 @@ def Compara(a, b):
 
 #Executa o programa com os argumentos
 def main(fonte, argumentos = ''):
+
 	#Organiza os argumentos '-spaces', '-limit', '-x' e '-y'
-	if '-spaces ' in argumentos:
-		splitspaces = int(argumentos.split('-spaces ')[1].split()[0].strip())
-	else:
-		splitspaces = 0
+	if '-spaces ' in argumentos: splitspaces = int(argumentos.split('-spaces ')[1].split()[0].strip())
+	else: splitspaces = 0
 
-	print(argumentos)
+	if '-limit' in argumentos: limit = float(argumentos.split('-limit ')[1].split()[0].strip())
+	else: limit = 0
 
-	if '-limit' in argumentos:
-		limit = float(argumentos.split('-limit ')[1].split()[0].strip())
-	else:
-		limit = 0
+	if '-x ' in argumentos: x = int(argumentos.split('-x ')[1].split()[0].strip())
+	else: x = 20
 
-	if '-x ' in argumentos:
-		x = int(argumentos.split('-x ')[1].split()[0].strip())
-	else:
-		x = 20
-
-	if '-y ' in argumentos:
-		y = int(argumentos.split('-y ')[1].split()[0].strip())
-	else:
-		y = 20
+	if '-y ' in argumentos: y = int(argumentos.split('-y ')[1].split()[0].strip())
+	else: y = 20
 
 	#Pede a palavra que será comparada com a fonte
 	palavra = input('\nPalavra:\n>> ')
@@ -46,10 +37,8 @@ def main(fonte, argumentos = ''):
 
 	#Se for demanda, quebrar os espaços de cada linha do arquivo fonte
 	for i, linha in enumerate(arquivo):
-		if splitspaces == 0:
-			arquivo[i] = " ".join(arquivo[i].split()[0:])
-		else:
-			arquivo[i] = " ".join(arquivo[i].split()[0:splitspaces])
+		if splitspaces == 0: arquivo[i] = " ".join(arquivo[i].split()[0:])
+		else: arquivo[i] = " ".join(arquivo[i].split()[0:splitspaces])
 
 	#Adiciona as semelhanças se atingirem o limite do argumento
 	semelhanças = list()
@@ -64,7 +53,6 @@ def main(fonte, argumentos = ''):
 
 	#Volta ao início: pede uma nova palavra para repetir o processo
 	main(fonte, argumentos)
-
 
 if __name__ == "__main__":
 	#Checa os argumentos da linha de comando

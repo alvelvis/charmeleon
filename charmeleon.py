@@ -27,7 +27,7 @@ except:
 		print('Fonetizador instalado com sucesso!')
 		exit()
 	except Exception as e:
-		print(str(e))
+		print('Erro ao baixar o fonetizador: ' + str(e))
 		podefonetizar = False
 
 #Compara duas palavras e retorna o grau de semelhança

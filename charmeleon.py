@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from difflib import SequenceMatcher
-import sys
+from sys import argv
 
 #Compara duas palavras e retorna o grau de semelhança
 def Compara(a, b):
@@ -10,23 +10,25 @@ def Compara(a, b):
 #Executa o programa com os argumentos
 def main(fonte, argumentos = ''):
 	#Organiza os argumentos '-spaces', '-limit', '-x' e '-y'
-	if '-spaces' in argumentos:
-		splitspaces = int(argumentos.split('-spaces ')[1].split(' ')[0].strip())
+	if '-spaces ' in argumentos:
+		splitspaces = int(argumentos.split('-spaces ')[1].split()[0].strip())
 	else:
 		splitspaces = 0
 
+	print(argumentos)
+
 	if '-limit' in argumentos:
-		limit = float(argumentos.split('-limit ')[1].split(' ')[0].strip())
+		limit = float(argumentos.split('-limit ')[1].split()[0].strip())
 	else:
 		limit = 0
 
-	if '-x' in argumentos:
-		x = int(argumentos.split('-x ')[1].split(' ')[0].strip())
+	if '-x ' in argumentos:
+		x = int(argumentos.split('-x ')[1].split()[0].strip())
 	else:
 		x = 20
 
-	if '-y' in argumentos:
-		y = int(argumentos.split('-y ')[1].split(' ')[0].strip())
+	if '-y ' in argumentos:
+		y = int(argumentos.split('-y ')[1].split()[0].strip())
 	else:
 		y = 20
 
@@ -66,7 +68,7 @@ def main(fonte, argumentos = ''):
 
 if __name__ == "__main__":
 	#Checa os argumentos da linha de comando
-	if len(sys.argv) == 1:
+	if len(argv) == 1:
 		print('Comando: charmeleon.py fonte:codificação -spaces NUM -limit NUM -x NUM -y NUM')
 		print('fonte: arquivo com as palavras do domínio')
 		print('codificação: codificação do arquivo com as palavras do domínio (padrão: utf8)')
@@ -75,8 +77,8 @@ if __name__ == "__main__":
 		print('-x: pixels reservados para a palavra (padrão: 20)')
 		print('-y: pixels reservados para a porcentagem (padrão: 20)')
 	#Nenhum argumento, apenas o arquivo fonte
-	elif len(sys.argv) == 2:
-		main(sys.argv[1])
+	elif len(argv) == 2:
+		main(argv[1])
 	#Mais de 2 argumentos
 	else:
-		main(sys.argv[1], " ".join(sys.argv[2:])) #Transforma todos os argumentos em uma string só
+		main(argv[1], " ".join(argv[2:])) #Transforma todos os argumentos em uma string só

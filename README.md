@@ -16,4 +16,4 @@
 	-y: pixels reservados para a porcentagem (padrão: 30)
 
 * Para comparar os sons (parâmetro *-fonetizar*), é necessário ter, na mesma pasta do **charmeleon**, o [**fonetizador**](https://github.com/alvelvis/fonetizador).
-* Para cortar espaços à direita do arquivo fonte, considere usar números negativos.
+* Para cortar espaços à direita do arquivo fonte (parâmetro *-spaces*), considere usar números negativos.

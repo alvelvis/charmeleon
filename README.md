@@ -5,7 +5,6 @@
 
 	>> charmeleon.py fonte:codificação <parâmetros>
 
-	Comando: charmeleon.py fonte:codificação <parâmetros>
 	fonte: arquivo com as palavras do domínio
 	codificação: codificação do arquivo com as palavras do domínio (padrão: utf8)
 	
@@ -16,4 +15,4 @@
 	-x: pixels reservados para a palavra (padrão: 30)
 	-y: pixels reservados para a porcentagem (padrão: 30)
 
-Parar comparar os sons (parâmetro *-fonetizar*), é necessário ter, na mesma pasta do **charmeleon**, o [**fonetizador**](https://github.com/alvelvis/fonetizador)
+Parar comparar os sons (parâmetro *-fonetizar*), é necessário ter, na mesma pasta do **charmeleon**, o [**fonetizador**](https://github.com/alvelvis/fonetizador).

@@ -13,7 +13,7 @@ def Compara(a, b, fonetizar):
 	if fonetizar: return SequenceMatcher(None, fonetiza(a), fonetiza(b)).ratio()
 	if not fonetizar: return SequenceMatcher(None, a, b).ratio()
 
-#Executa o programa com os argumentos
+#Executa o programa com os parâmetros
 def main(fonte, argumentos = ''):
 
 	#Organiza os parâmetros
@@ -64,7 +64,7 @@ def main(fonte, argumentos = ''):
 	#Volta ao início: pede uma nova palavra para repetir o processo
 	main(fonte, argumentos)
 
-if __name__ == "__main__":
+if __name__ == "__main__":	
 	#Checa os argumentos da linha de comando
 	if len(argv) == 1:
 		print('Comando: charmeleon.py fonte:codificação <parâmetros>')
@@ -77,9 +77,11 @@ if __name__ == "__main__":
 		print('-limit: porcentagem mínima a ser mostrada (padrão: 0)')
 		print('-x: pixels reservados para a palavra (padrão: 30)')
 		print('-y: pixels reservados para a porcentagem (padrão: 30)')
+
 	#Nenhum argumento, apenas o arquivo fonte
 	elif len(argv) == 2:
 		main(argv[1])
+		
 	#Mais de 2 argumentos
 	else:
 		main(argv[1], " ".join(argv[2:])) #Transforma todos os argumentos em uma string só

@@ -32,7 +32,7 @@ except:
 
 #Compara duas palavras e retorna o grau de semelhança
 def Compara(a, b, fonetizar):
-	if fonetizar: return SequenceMatcher(None, fonetiza(a).upper(), fonetiza(b)).upper().ratio()
+	if fonetizar: return SequenceMatcher(None, fonetiza(a).upper(), fonetiza(b).upper()).ratio()
 	if not fonetizar: return SequenceMatcher(None, a.upper(), b.upper()).ratio()
 
 #Executa o programa com os parâmetros

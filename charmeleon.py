@@ -9,8 +9,8 @@ path.insert(0, 'fonetizador')
 try:
 	from git import Git
 except:
-	from pip import main
-	pip.main(['install', 'GitPython'])
+	from pip import main as pipmain
+	pipmain(['install', 'GitPython'])
 	from git import Git
 
 #Tenta atualizar o fonetizador
@@ -39,7 +39,7 @@ def Compara(a, b, fonetizar):
 def main(fonte, argumentos = ''):
 
 	#Checa se o arquivo fonte existe
-	if ospath.isfile(fonte):
+	if ospath.isfile(fonte.split(':')[0]):
 
 		#Organiza os parâmetros
 		fonetizar = False
@@ -96,7 +96,7 @@ def main(fonte, argumentos = ''):
 if __name__ == "__main__":	
 	#Checa os argumentos da linha de comando
 	if len(argv) == 1:
-		print('Comando: charmeleon.py fonte:codificação <parâmetros>')
+		print('\nComando: charmeleon.py fonte:codificação <parâmetros>')
 		print('fonte: arquivo com as palavras do domínio')
 		print('codificação: codificação do arquivo com as palavras do domínio (padrão: utf8)')
 		print('')

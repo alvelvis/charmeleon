@@ -1,7 +1,8 @@
 # charmeleon
 **charmeleon** compara palavras usando como base um arquivo fonte
 
-#Como usar
+# Como usar
+
 	>> charmeleon.py fonte:codificação -spaces {NUM} -limit {NUM} -x {NUM} -y {NUM}
 
 fonte: arquivo com as palavras do domínio

@@ -1,12 +1,34 @@
 # -*- coding: utf-8 -*-
 
+from os import path as ospath
 from difflib import SequenceMatcher
-from sys import argv
+from sys import argv, path
+path.insert(0, 'fonetizador')
 
-#Tenta importa o fonetizador
+#Tenta importar o git
+try:
+	from git import Git
+except:
+	from pip import main
+	pip.main(['install', 'GitPython'])
+	from git import Git
+
+#Tenta atualizar o fonetizador
+try: Git('fonetizador').pull()
+except: None
+
+#Tenta importar o fonetizador
 podefonetizar = True
-try: from fonetizador import fonetiza
-except:	podefonetizar = False
+try:
+	from fonetizador import fonetiza
+except:
+	try:
+		Git().clone('https://github.com/alvelvis/fonetizador.git')		
+		print('Fonetizador instalado com sucesso!')
+		exit()
+	except Exception as e:
+		print(str(e))
+		podefonetizar = False
 
 #Compara duas palavras e retorna o grau de semelhança
 def Compara(a, b, fonetizar):
@@ -16,53 +38,60 @@ def Compara(a, b, fonetizar):
 #Executa o programa com os parâmetros
 def main(fonte, argumentos = ''):
 
-	#Organiza os parâmetros
-	fonetizar = False
-	if '-fonetizar' in argumentos and podefonetizar: fonetizar = True
-	elif '-fonetizar' in argumentos and not podefonetizar: print('\nNão foi encontrado o fonetizador')
+	#Checa se o arquivo fonte existe
+	if ospath.isfile(fonte):
 
-	if '-spaces ' in argumentos: splitspaces = int(argumentos.split('-spaces ')[1].split()[0].strip())
-	else: splitspaces = 0
+		#Organiza os parâmetros
+		fonetizar = False
+		if '-fonetizar' in argumentos and podefonetizar: fonetizar = True
+		elif '-fonetizar' in argumentos and not podefonetizar: print('\nNão foi encontrado o fonetizador')
 
-	if '-limit' in argumentos: limit = float(argumentos.split('-limit ')[1].split()[0].strip())
-	else: limit = 0
+		if '-spaces ' in argumentos: splitspaces = int(argumentos.split('-spaces ')[1].split()[0].strip())
+		else: splitspaces = 0
 
-	if '-x ' in argumentos: x = int(argumentos.split('-x ')[1].split()[0].strip())
-	else: x = 30
+		if '-limit' in argumentos: limit = float(argumentos.split('-limit ')[1].split()[0].strip())
+		else: limit = 0
 
-	if '-y ' in argumentos: y = int(argumentos.split('-y ')[1].split()[0].strip())
-	else: y = 30
+		if '-x ' in argumentos: x = int(argumentos.split('-x ')[1].split()[0].strip())
+		else: x = 30
 
-	#Pede a palavra que será comparada com a fonte
-	palavra = input('\nPalavra:\n>> ')
-	while palavra.strip() == '': #Se não for digitada nenhuma palavra, repetir
-		palavra = input('>> ')
-	if palavra == 'exit': exit() #Fecha o programa se a palavra for 'exit'
-	print('')
+		if '-y ' in argumentos: y = int(argumentos.split('-y ')[1].split()[0].strip())
+		else: y = 30
 
-	#Se não tiver codificação na fonte, será utf8
-	if not ':' in fonte: fonte += ':utf8'
-	#Lê o arquivo e transforma as linhas em lista
-	arquivo = open(fonte.split(':')[0], 'r', encoding = fonte.split(':')[1]).read().splitlines()
+		#Pede a palavra que será comparada com a fonte
+		palavra = input('\nPalavra:\n>> ')
+		while palavra.strip() == '': #Se não for digitada nenhuma palavra, repetir
+			palavra = input('>> ')
+		if palavra == 'exit': exit() #Fecha o programa se a palavra for 'exit'
+		print('')
 
-	#Se for demanda, quebrar os espaços de cada linha do arquivo fonte
-	for i, linha in enumerate(arquivo):
-		if splitspaces == 0: arquivo[i] = " ".join(arquivo[i].split()[0:])
-		else: arquivo[i] = " ".join(arquivo[i].split()[0:splitspaces])
+		#Se não tiver codificação na fonte, será utf8
+		if not ':' in fonte: fonte += ':utf8'
+		#Lê o arquivo e transforma as linhas em lista
+		arquivo = open(fonte.split(':')[0], 'r', encoding = fonte.split(':')[1]).read().splitlines()
 
-	#Adiciona as semelhanças se atingirem o limite do argumento
-	semelhanças = list()
-	for linha in arquivo:
-		semelhanças.append((linha, Compara(palavra, linha, fonetizar)*100))
+		#Se for demanda, quebrar os espaços de cada linha do arquivo fonte
+		for i, linha in enumerate(arquivo):
+			if splitspaces == 0: arquivo[i] = " ".join(arquivo[i].split()[0:])
+			else: arquivo[i] = " ".join(arquivo[i].split()[0:splitspaces])
 
-	#Printa os itens de semelhança no formato de porcentagem e com os pixels do argumento
-	semelhanças.sort(reverse=True, key = lambda x: float(x[1]))
-	formatation = "{0:"+str(x)+"} {1:"+str(y)+"}"
-	for item in semelhanças:
-		if item[1] > limit: print(formatation.format(item[0], str(item[1])+'%'))
+		#Adiciona as semelhanças se atingirem o limite do argumento
+		semelhanças = list()
+		for linha in arquivo:
+			semelhanças.append((linha, Compara(palavra, linha, fonetizar)*100))
 
-	#Volta ao início: pede uma nova palavra para repetir o processo
-	main(fonte, argumentos)
+		#Printa os itens de semelhança no formato de porcentagem e com os pixels do argumento
+		semelhanças.sort(reverse=True, key = lambda x: float(x[1]))
+		formatation = "{0:"+str(x)+"} {1:"+str(y)+"}"
+		for item in semelhanças:
+			if item[1] > limit: print(formatation.format(item[0], str(item[1])+'%'))
+
+		#Volta ao início: pede uma nova palavra para repetir o processo
+		main(fonte, argumentos)
+
+	else:
+		print('Arquivo fonte "'+fonte+'" não é um arquivo de texto válido.')
+		exit()
 
 if __name__ == "__main__":	
 	#Checa os argumentos da linha de comando

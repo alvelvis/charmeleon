@@ -3,11 +3,17 @@
 
 # Como usar
 
-	>> charmeleon.py fonte:codificação -spaces {NUM} -limit {NUM} -x {NUM} -y {NUM}
+	>> charmeleon.py fonte:codificação <parâmetros>
 
-fonte: arquivo com as palavras do domínio
-<br>codificação: codificação do arquivo com as palavras do domínio (padrão: utf8)
-<br>-spaces: número de espaços que serão cortados (padrão: nenhum) (para cortar espaços à direita: número negativo)
-<br>-limit: porcentagem mínima a ser mostrada (padrão: 0)
-<br>-x: pixels reservados para a palavra (padrão: 20)
-<br>-y: pixels reservados para a porcentagem (padrão: 20)
+	Comando: charmeleon.py fonte:codificação <parâmetros>
+	fonte: arquivo com as palavras do domínio
+	codificação: codificação do arquivo com as palavras do domínio (padrão: utf8)
+	
+	Parâmetros:
+	-fonetizar: comparar os sons das palavras
+	-spaces: número de espaços que serão cortados (padrão: infinito)
+	-limit: porcentagem mínima a ser mostrada (padrão: 0)
+	-x: pixels reservados para a palavra (padrão: 30)
+	-y: pixels reservados para a porcentagem (padrão: 30)
+
+Parar comparar os sons (parâmetro *-fonetizar*), é necessário ter, na mesma pasta do **charmeleon**, o [**fonetizador**](https://github.com/alvelvis/fonetizador)

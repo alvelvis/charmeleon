@@ -3,14 +3,24 @@
 from difflib import SequenceMatcher
 from sys import argv
 
+#Tenta importa o fonetizador
+podefonetizar = True
+try: from fonetizador import fonetiza
+except:	podefonetizar = False
+
 #Compara duas palavras e retorna o grau de semelhança
-def Compara(a, b):
-	return SequenceMatcher(None, a, b).ratio()
+def Compara(a, b, fonetizar):
+	if fonetizar: return SequenceMatcher(None, fonetiza(a), fonetiza(b)).ratio()
+	if not fonetizar: return SequenceMatcher(None, a, b).ratio()
 
 #Executa o programa com os argumentos
 def main(fonte, argumentos = ''):
 
-	#Organiza os argumentos '-spaces', '-limit', '-x' e '-y'
+	#Organiza os parâmetros
+	fonetizar = False
+	if '-fonetizar' in argumentos and podefonetizar: fonetizar = True
+	elif '-fonetizar' in argumentos and not podefonetizar: print('\nNão foi encontrado o fonetizador')
+
 	if '-spaces ' in argumentos: splitspaces = int(argumentos.split('-spaces ')[1].split()[0].strip())
 	else: splitspaces = 0
 
@@ -18,10 +28,10 @@ def main(fonte, argumentos = ''):
 	else: limit = 0
 
 	if '-x ' in argumentos: x = int(argumentos.split('-x ')[1].split()[0].strip())
-	else: x = 20
+	else: x = 30
 
 	if '-y ' in argumentos: y = int(argumentos.split('-y ')[1].split()[0].strip())
-	else: y = 20
+	else: y = 30
 
 	#Pede a palavra que será comparada com a fonte
 	palavra = input('\nPalavra:\n>> ')
@@ -43,7 +53,7 @@ def main(fonte, argumentos = ''):
 	#Adiciona as semelhanças se atingirem o limite do argumento
 	semelhanças = list()
 	for linha in arquivo:
-		semelhanças.append((linha, Compara(palavra, linha)*100))
+		semelhanças.append((linha, Compara(palavra, linha, fonetizar)*100))
 
 	#Printa os itens de semelhança no formato de porcentagem e com os pixels do argumento
 	semelhanças.sort(reverse=True, key = lambda x: float(x[1]))
@@ -57,13 +67,16 @@ def main(fonte, argumentos = ''):
 if __name__ == "__main__":
 	#Checa os argumentos da linha de comando
 	if len(argv) == 1:
-		print('Comando: charmeleon.py fonte:codificação -spaces NUM -limit NUM -x NUM -y NUM')
+		print('Comando: charmeleon.py fonte:codificação <parâmetros>')
 		print('fonte: arquivo com as palavras do domínio')
 		print('codificação: codificação do arquivo com as palavras do domínio (padrão: utf8)')
+		print('')
+		print('Parâmetros:')
+		print('-fonetizar: comparar os sons das palavras')
 		print('-spaces: número de espaços que serão cortados (padrão: infinito)')
 		print('-limit: porcentagem mínima a ser mostrada (padrão: 0)')
-		print('-x: pixels reservados para a palavra (padrão: 20)')
-		print('-y: pixels reservados para a porcentagem (padrão: 20)')
+		print('-x: pixels reservados para a palavra (padrão: 30)')
+		print('-y: pixels reservados para a porcentagem (padrão: 30)')
 	#Nenhum argumento, apenas o arquivo fonte
 	elif len(argv) == 2:
 		main(argv[1])

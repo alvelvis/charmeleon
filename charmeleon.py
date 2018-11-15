@@ -11,7 +11,6 @@ try:
 except:
 	from pip import main as pipmain
 	pipmain(['install', 'GitPython'])
-	from git import Git
 
 #Tenta atualizar o fonetizador
 try: Git('fonetizador').pull()
@@ -44,12 +43,12 @@ def main(fonte, argumentos = ''):
 		#Organiza os parâmetros
 		fonetizar = False
 		if '-fonetizar' in argumentos and podefonetizar: fonetizar = True
-		elif '-fonetizar' in argumentos and not podefonetizar: print('\nNão foi encontrado o fonetizador')
+		elif '-fonetizar' in argumentos and not podefonetizar: print('\nNão foi possível encontrar o fonetizador')
 
-		if '-spaces ' in argumentos: splitspaces = int(argumentos.split('-spaces ')[1].split()[0].strip())
+		if '-espaços ' in argumentos: splitspaces = int(argumentos.split('-espaços ')[1].split()[0].strip())
 		else: splitspaces = 0
 
-		if '-limit' in argumentos: limit = float(argumentos.split('-limit ')[1].split()[0].strip())
+		if '-limite ' in argumentos: limit = float(argumentos.split('-limite ')[1].split()[0].strip())
 		else: limit = 0
 
 		if '-x ' in argumentos: x = int(argumentos.split('-x ')[1].split()[0].strip())
@@ -102,8 +101,8 @@ if __name__ == "__main__":
 		print('')
 		print('Parâmetros:')
 		print('-fonetizar: comparar os sons das palavras')
-		print('-spaces: número de espaços que serão cortados (padrão: infinito)')
-		print('-limit: porcentagem mínima a ser mostrada (padrão: 0)')
+		print('-espaços: número de espaços que serão cortados (padrão: infinito)')
+		print('-limite: porcentagem mínima a ser mostrada (padrão: 0)')
 		print('-x: pixels reservados para a palavra (padrão: 30)')
 		print('-y: pixels reservados para a porcentagem (padrão: 30)')
 
